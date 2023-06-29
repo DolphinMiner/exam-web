@@ -6,12 +6,8 @@ import com.whc.data.context.QueryContext;
 import com.whc.data.dto.ServiceResponse;
 import com.whc.data.entity.DemoData;
 import com.whc.data.mapper.DataMapper;
-import jakarta.annotation.Resource;
-import jakarta.annotation.Resources;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.whc.domain.QueryProcessor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 
@@ -26,9 +22,12 @@ public class QueryByIdProcessor implements QueryProcessor {
 
     private static final int SUCCESSFUL = 0;
     private static final int FAILED = 1;
-    // Dao
-    @Autowired
+
     DataMapper dataMapper;
+
+    public QueryByIdProcessor(DataMapper dataMapper) {
+        this.dataMapper = dataMapper;
+    }
 
     @Override
     public ServiceResponse process(QueryContext context) {
@@ -38,9 +37,9 @@ public class QueryByIdProcessor implements QueryProcessor {
         // process business
         DemoData demoData = dataMapper.queryById(context.getId());
         // convert response
-        if (demoData == null){
+        if (demoData == null) {
             this.buildFailedResponse(serviceResponse, "query no result");
-        }else {
+        } else {
             serviceResponse.getData().add(demoData);
         }
         return serviceResponse;

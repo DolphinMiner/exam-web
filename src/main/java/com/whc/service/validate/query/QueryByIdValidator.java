@@ -3,8 +3,8 @@ package com.whc.service.validate.query;
 import com.whc.commom.annotation.QueryType;
 import com.whc.commom.type.QueryTypeEnum;
 import com.whc.data.context.QueryContext;
-import com.whc.service.validate.QueryValidator;
 import com.whc.data.dto.ServiceRequest;
+import com.whc.service.validate.QueryValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +26,7 @@ public class QueryByIdValidator implements QueryValidator {
 
     @Override
     public boolean validate(ServiceRequest request) {
-        if(request.getId() < 0){
+        if (request.getId() <= 0) {
             return false;
         }
         return true;

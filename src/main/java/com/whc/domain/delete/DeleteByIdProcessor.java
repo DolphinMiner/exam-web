@@ -1,56 +1,51 @@
-package com.whc.domain.query;
+package com.whc.domain.delete;
 
-import com.whc.commom.annotation.QueryType;
-import com.whc.commom.type.QueryTypeEnum;
-import com.whc.data.context.QueryContext;
+import com.whc.commom.annotation.DeleteType;
+import com.whc.commom.type.DeleteTypeEnum;
+import com.whc.data.context.DeleteContext;
 import com.whc.data.dto.ServiceResponse;
-import com.whc.data.entity.DemoData;
 import com.whc.data.mapper.DataMapper;
-import com.whc.domain.QueryProcessor;
+import com.whc.domain.DeleteProcessor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 
 /**
  * @Author: hc.wan
- * @CreateTime: 2023-06-29 15:32
+ * @CreateTime: 2023-06-29 22:13
  * @Description:
  */
 @Component
-@QueryType(QueryTypeEnum.ALL)
-public class QueryAllProcessor implements QueryProcessor {
+@DeleteType(DeleteTypeEnum.SPECIFIC_ID)
+public class DeleteByIdProcessor implements DeleteProcessor {
 
     private static final int SUCCESSFUL = 0;
     private static final int FAILED = 1;
 
     DataMapper dataMapper;
 
-    public QueryAllProcessor(DataMapper dataMapper) {
+    public DeleteByIdProcessor(DataMapper dataMapper) {
         this.dataMapper = dataMapper;
     }
 
     @Override
-    public ServiceResponse process(QueryContext context) {
+    public ServiceResponse process(DeleteContext context) {
         ServiceResponse serviceResponse = this.buildSuccessfulResponse();
 
         // process business
-        ArrayList<DemoData> demoData = dataMapper.queryAll();
-
+        boolean success = dataMapper.deleteById(context.getId());
         // convert response
-        serviceResponse.setData(demoData);
-
-        if(CollectionUtils.isEmpty(serviceResponse.getData())){
-            this.buildFailedResponse(serviceResponse, "query no result");
+        if (!success) {
+            return this.buildFailedResponse(serviceResponse, "delete failed");
         }
         return serviceResponse;
     }
 
-
     private ServiceResponse buildSuccessfulResponse() {
         ServiceResponse res = new ServiceResponse();
         res.setCode(SUCCESSFUL);
-        res.setMessage("successful");
+        res.setMessage("process successful");
+        res.setData(new ArrayList<>());
         return res;
     }
 

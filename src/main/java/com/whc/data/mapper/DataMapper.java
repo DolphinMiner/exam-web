@@ -21,10 +21,10 @@ public interface DataMapper {
     @Select("select * from demo where id = #{id}")
     @ResultType(com.whc.data.entity.DemoData.class)
     @Results({
-            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="col_a", property="colA", jdbcType= JdbcType.INTEGER),
-            @Result(column="col_b", property="colB", jdbcType= JdbcType.INTEGER),
-            @Result(column="col_c", property="colC", jdbcType= JdbcType.INTEGER)
+            @Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
+            @Result(column = "col_a", property = "colA", jdbcType = JdbcType.INTEGER),
+            @Result(column = "col_b", property = "colB", jdbcType = JdbcType.INTEGER),
+            @Result(column = "col_c", property = "colC", jdbcType = JdbcType.INTEGER)
     })
     DemoData queryById(@Param("id") long id);
 
@@ -37,10 +37,10 @@ public interface DataMapper {
     @Select("select * from demo")
     @ResultType(com.whc.data.entity.DemoData.class)
     @Results({
-            @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-            @Result(column="col_a", property="colA", jdbcType= JdbcType.INTEGER),
-            @Result(column="col_b", property="colB", jdbcType= JdbcType.INTEGER),
-            @Result(column="col_c", property="colC", jdbcType= JdbcType.INTEGER)
+            @Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
+            @Result(column = "col_a", property = "colA", jdbcType = JdbcType.INTEGER),
+            @Result(column = "col_b", property = "colB", jdbcType = JdbcType.INTEGER),
+            @Result(column = "col_c", property = "colC", jdbcType = JdbcType.INTEGER)
     })
     ArrayList<DemoData> queryAll();
 
@@ -68,7 +68,7 @@ public interface DataMapper {
      * @param colC colC
      * @return update result
      */
-    @Update("update demo col_a = #{colA}, col_b = #{colB}, col_c = #{colC} where id = #{id}")
+    @Update("update demo set col_a = #{colA}, col_b = #{colB}, col_c = #{colC} where id = #{id}")
     boolean updateById(@Param("id") long id,
                        @Param("colA") String colA,
                        @Param("colB") boolean colB,
@@ -81,7 +81,7 @@ public interface DataMapper {
      * @param id id
      * @return delete result
      */
-    @Delete("delete from demo where where id = #{id}")
+    @Delete("delete from demo where id = #{id}")
     boolean deleteById(@Param("id") long id);
 
 }

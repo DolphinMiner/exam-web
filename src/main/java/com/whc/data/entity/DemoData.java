@@ -1,8 +1,7 @@
 package com.whc.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.ibatis.annotations.Result;
 
 import java.sql.Timestamp;
 
@@ -12,21 +11,22 @@ import java.sql.Timestamp;
  * @Description:
  */
 @Data
+@AllArgsConstructor
 public class DemoData {
     /**
      * primary key
      */
-    private int id;
+    private long id;
     /**
-     *  col_A
+     * col_A
      */
     private String colA;
     /**
-     *  col_B
+     * col_B
      */
     private boolean colB;
     /**
-     *  col_C
+     * col_C
      */
     private Timestamp colC;
 

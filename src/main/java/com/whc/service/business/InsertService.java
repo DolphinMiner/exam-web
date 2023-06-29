@@ -1,41 +1,39 @@
-package com.whc.service;
+package com.whc.service.business;
 
-import com.whc.commom.annotation.QueryType;
-import com.whc.commom.type.QueryTypeEnum;
-import com.whc.data.context.QueryContext;
+import com.whc.commom.annotation.InsertType;
+import com.whc.commom.type.InsertTypeEnum;
+import com.whc.data.context.InsertContext;
 import com.whc.data.dto.ServiceRequest;
 import com.whc.data.dto.ServiceResponse;
-import com.whc.domain.query.QueryProcessor;
-import com.whc.service.validate.QueryValidator;
+import com.whc.domain.InsertProcessor;
+import com.whc.service.validate.InsertValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @Author: hc.wan
- * @CreateTime: 2023-06-29 15:25
+ * @CreateTime: 2023-06-29 20:33
  * @Description:
  */
 @Service
-public class QueryService {
+public class InsertService {
 
     private static final int SUCCESSFUL = 0;
     private static final int FAILED = 1;
 
     // validatorImpl
-    List<QueryValidator> queryValidatorList;
+    List<InsertValidator> updateValidatorList;
 
     // processorImpl
-    List<QueryProcessor> processorList;
+    List<InsertProcessor> processorList;
 
-    public QueryService(List<QueryValidator> queryValidatorList, List<QueryProcessor> processorList) {
-        this.queryValidatorList = queryValidatorList;
+    public InsertService(List<InsertValidator> updateValidatorList, List<InsertProcessor> processorList) {
+        this.updateValidatorList = updateValidatorList;
         this.processorList = processorList;
     }
 
-    // validate
-    public ServiceResponse process(ServiceRequest request, int queryType) {
-
+    public ServiceResponse process(ServiceRequest request) {
         // build fail response
         ServiceResponse serviceResponse = this.buildFailedResponse();
 
@@ -47,10 +45,10 @@ public class QueryService {
 
             // specific validate
             boolean validate = false;
-            for (QueryValidator queryValidator : queryValidatorList) {
-                QueryTypeEnum queryTypeEnum = queryValidator.getClass().getAnnotation(QueryType.class).value();
-                if (queryTypeEnum.getValue() == queryType) {
-                    validate = queryValidator.validate(request);
+            for (InsertValidator validator : updateValidatorList) {
+                InsertTypeEnum typeEnum = validator.getClass().getAnnotation(InsertType.class).value();
+                if (typeEnum == InsertTypeEnum.DEFAULT) {
+                    validate = validator.validate(request);
                 }
             }
 
@@ -61,21 +59,22 @@ public class QueryService {
             }
 
             // build Context
-            QueryContext context = null;
-            for (QueryValidator queryValidator : queryValidatorList) {
-                QueryTypeEnum queryTypeEnum = queryValidator.getClass().getAnnotation(QueryType.class).value();
-                if (queryTypeEnum.getValue() == queryType) {
-                    context = queryValidator.buildContext(request);
+            InsertContext context = null;
+            for (InsertValidator validator : updateValidatorList) {
+                InsertTypeEnum typeEnum = validator.getClass().getAnnotation(InsertType.class).value();
+                if (typeEnum == InsertTypeEnum.DEFAULT) {
+                    context = validator.buildContext(request);
                 }
             }
 
             // business process
-            for (QueryProcessor queryProcessor : processorList) {
-                QueryTypeEnum queryTypeEnum = queryProcessor.getClass().getAnnotation(QueryType.class).value();
-                if (queryTypeEnum.getValue() == queryType) {
-                    return queryProcessor.process(context);
+            for (InsertProcessor processor : processorList) {
+                InsertTypeEnum typeEnum = processor.getClass().getAnnotation(InsertType.class).value();
+                if (typeEnum == InsertTypeEnum.DEFAULT) {
+                    return processor.process(context);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             serviceResponse = new ServiceResponse(FAILED, e.getMessage(), null);
@@ -98,4 +97,5 @@ public class QueryService {
         res.setMessage("failed");
         return res;
     }
+
 }
