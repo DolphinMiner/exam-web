@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
  */
 @Service
 public class ModifyContentService {
-
-    private static final String APK_KEY = "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";
-
+    private static final Integer SUCCESS = 0;
+    private static final Integer FAILED = 1;
+    private static final String APK_KEY = "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";
     // regex
     private static final String PATTERN = "^[a-zA-Z0-9!@#$%^&*()\\-_=+{}\\[\\]|;:'\",.<>/?`~\\s]*$";
 
@@ -68,20 +68,21 @@ public class ModifyContentService {
             res = this.buildSuccessfulResponse(answer.toString());
         } catch (Exception e) {
             e.printStackTrace();
+            res = this.buildFailResponse(e.getMessage());
         }
         return res;
     }
 
     private ModifyContentResponse buildFailResponse(String message) {
         ModifyContentResponse res = new ModifyContentResponse();
-        res.setCode(1);
-        res.setMessage("process failed");
+        res.setCode(FAILED);
+        res.setMessage(message);
         return res;
     }
 
     private ModifyContentResponse buildSuccessfulResponse(String answer) {
         ModifyContentResponse res = new ModifyContentResponse();
-        res.setCode(0);
+        res.setCode(SUCCESS);
         res.setMessage("process successful");
         res.setAnswer(answer);
         return res;

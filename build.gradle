@@ -51,9 +51,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
     // https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java
-    implementation 'org.apache.flink:flink-streaming-java:1.17.0'
+    compileOnly 'org.apache.flink:flink-streaming-java:1.17.0'
     // https://mvnrepository.com/artifact/org.apache.flink/flink-java
-    implementation 'org.apache.flink:flink-java:1.17.0'
+    compileOnly 'org.apache.flink:flink-java:1.17.0'
 
 
 }
