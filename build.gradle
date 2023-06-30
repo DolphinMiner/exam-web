@@ -6,7 +6,7 @@ plugins {
 group 'com.whc'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility(17)
+sourceCompatibility = '17'
 
 /**
  * 默认使用中央仓库
@@ -49,6 +49,11 @@ dependencies {
     // http
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+
+    // https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java
+    implementation 'org.apache.flink:flink-streaming-java:1.17.0'
+    // https://mvnrepository.com/artifact/org.apache.flink/flink-java
+    implementation 'org.apache.flink:flink-java:1.17.0'
 
 
 }

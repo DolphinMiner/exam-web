@@ -23,14 +23,17 @@ public class ServiceController {
 
     ModifyContentService modifyContentService;
 
+
     public ServiceController(QueryService queryService,
                              DeleteService deleteService,
                              InsertService insertService,
-                             UpdateService updateService) {
+                             UpdateService updateService,
+                             ModifyContentService modifyContentService) {
         this.queryService = queryService;
         this.deleteService = deleteService;
         this.insertService = insertService;
         this.updateService = updateService;
+        this.modifyContentService = modifyContentService;
     }
 
     /**
@@ -39,7 +42,7 @@ public class ServiceController {
      * @param request request
      * @return response
      */
-    @RequestMapping(value = "/insert/", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public ServiceResponse insert(@RequestBody ServiceRequest request) {
         return insertService.process(request);
     }
@@ -87,14 +90,14 @@ public class ServiceController {
 
     /**
      * modify incorrect words in English text
-     * @param request
-     * @return
+     *
+     * @param request request
+     * @return correct text
      */
-    @RequestMapping(value =  "/modifyContent/", method = RequestMethod.POST)
-    public ModifyContentResponse modifyContent(@RequestBody ModifyContentRequest request){
+    @RequestMapping(value = "/modifyContent", method = RequestMethod.POST)
+    public ModifyContentResponse modifyContent(@RequestBody ModifyContentRequest request) {
         return modifyContentService.process(request);
     }
-
 
 
 }

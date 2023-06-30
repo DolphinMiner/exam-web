@@ -8,6 +8,7 @@ import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.OpenAiService;
 import com.whc.data.dto.ModifyContentRequest;
 import com.whc.data.dto.ModifyContentResponse;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.regex.Pattern;
  * @CreateTime: 2023-06-30 09:01
  * @Description:
  */
+@Service
 public class ModifyContentService {
 
     private static final String APK_KEY = "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";
@@ -43,7 +45,8 @@ public class ModifyContentService {
             // process
             OpenAiService service = new OpenAiService(APK_KEY);
             final List<ChatMessage> messages = new ArrayList<>();
-            final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), request.getPrompt());
+            String prefix = "please help me to modify words in input English text: ";
+            final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), prefix + request.getPrompt());
             messages.add(systemMessage);
             ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                     .builder()
