@@ -26,7 +26,7 @@ public class ModifyContentService {
     private static final String APK_KEY = "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";
 
     // regex
-    private static final String PATTERN = "^[a-zA-Z0-9!@#$%^&*()\\-_=+{}\\[\\]|;:'\",.<>/?`~\\s]*$\n";
+    private static final String PATTERN = "^[a-zA-Z0-9!@#$%^&*()\\-_=+{}\\[\\]|;:'\",.<>/?`~\\s]*$";
 
     public ModifyContentResponse process(ModifyContentRequest request) {
         // build res
