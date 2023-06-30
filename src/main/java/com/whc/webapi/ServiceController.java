@@ -1,12 +1,11 @@
 package com.whc.webapi;
 
 
+import com.whc.data.dto.ModifyContentRequest;
+import com.whc.data.dto.ModifyContentResponse;
 import com.whc.data.dto.ServiceRequest;
 import com.whc.data.dto.ServiceResponse;
-import com.whc.service.business.DeleteService;
-import com.whc.service.business.InsertService;
-import com.whc.service.business.QueryService;
-import com.whc.service.business.UpdateService;
+import com.whc.service.business.*;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +20,8 @@ public class ServiceController {
     DeleteService deleteService;
     InsertService insertService;
     UpdateService updateService;
+
+    ModifyContentService modifyContentService;
 
     public ServiceController(QueryService queryService,
                              DeleteService deleteService,
@@ -83,6 +84,17 @@ public class ServiceController {
         serviceRequest.setId(id);
         return queryService.process(serviceRequest, queryType);
     }
+
+    /**
+     * modify incorrect words in English text
+     * @param request
+     * @return
+     */
+    @RequestMapping(value =  "/modifyContent/", method = RequestMethod.POST)
+    public ModifyContentResponse modifyContent(@RequestBody ModifyContentRequest request){
+        return modifyContentService.process(request);
+    }
+
 
 
 }

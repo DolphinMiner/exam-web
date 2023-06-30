@@ -21,6 +21,6 @@ public class Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("server start successfully！");
+        System.out.println("server start successfully!");
     }
 }

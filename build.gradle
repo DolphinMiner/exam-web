@@ -26,6 +26,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter:3.1.0'
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.26'
+    // 少这个会报错
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
     // jdbc
     implementation 'mysql:mysql-connector-java:8.0.33'
     // spring boot mybatis
@@ -33,9 +36,30 @@ dependencies {
     // connect pool
     implementation 'com.alibaba:druid:1.2.16'
 
+    // gpt
+    // https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/service
+    implementation 'com.theokanning.openai-gpt3-java:service:0.14.0'
+
+    // https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/api
+    implementation 'com.theokanning.openai-gpt3-java:api:0.14.0'
+
+    // https://mvnrepository.com/artifact/com.theokanning.openai-gpt3-java/client
+    implementation 'com.theokanning.openai-gpt3-java:client:0.14.0'
+
+    // http
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
 
 }
+
+// 编译java文件时采用UTF-8或者 GBK
+tasks.withType(JavaCompile) {
+
+    options.encoding = "UTF-8"
+}
+
+
 
 test {
     useJUnitPlatform()
